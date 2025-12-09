@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uncertainty Notebook</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <!-- Tools -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/turndown/dist/turndown.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- Main Editor Area -->
+        <main class="editor-section">
+            <header class="editor-header">
+                <div class="header-content">
+                    <div>
+                        <h1>Uncertainty Notebook</h1>
+                        <p class="subtitle">Capture thoughts, extract risks & decisions.</p>
+                    </div>
+                    <div class="mode-switcher">
+                        <button id="btn-mode-edit" class="btn-mode active">Edit</button>
+                        <button id="btn-mode-author" class="btn-mode">Author</button>
+                        <button id="btn-mode-reader" class="btn-mode">Reader</button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Views -->
+            <textarea id="editor-edit" class="editor-content" spellcheck="false"
+                placeholder="Write in Markdown... use [^unc-id] for annotations."></textarea>
+            <div id="editor-preview" class="editor-content hidden"></div>
+
+            <!-- Floating Action Button / Toolbar (Hidden by default, shown on selection in Edit Mode) -->
+            <div id="selection-toolbar" class="selection-toolbar hidden">
+                <button id="btn-create-uncertainty" class="btn-tool btn-uncertainty">
+                    <span class="material-symbols-rounded">help</span>
+                    Uncertainty
+                </button>
+                <button id="btn-create-decision" class="btn-tool btn-decision">
+                    <span class="material-symbols-rounded">gavel</span>
+                    Decision
+                </button>
+            </div>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar-section" id="sidebar">
+            <header class="sidebar-header">
+                <div style="display:flex; align-items:center; gap:0.5rem;">
+                    <h2>DRUIDE Knowledge Base</h2>
+                    <span id="item-count" class="badge">0</span>
+                </div>
+                <button id="btn-view-kb" class="btn-icon" title="View JSON">
+                    <span class="material-symbols-rounded">data_object</span>
+                </button>
+            </header>
+            <div id="items-list" class="items-list">
+                <!-- Items will be injected here -->
+            </div>
+        </aside>
+    </div>
+
+    <!-- Modal: Creation -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="modal">
+            <header class="modal-header">
+                <h3 id="modal-title">Create Item</h3>
+                <button id="btn-close-modal" class="btn-icon"><span
+                        class="material-symbols-rounded">close</span></button>
+            </header>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="modal-input-text" id="modal-label-text">Description</label>
+                    <textarea id="modal-input-text" rows="3" placeholder="Describe the uncertainty..."></textarea>
+                </div>
+                <!-- Context/Snippet preview could go here -->
+                <div class="snippet-preview">
+                    <span class="label-xs">Referencing:</span>
+                    <blockquote id="modal-snippet">"Selected text..."</blockquote>
+                </div>
+            </div>
+            <footer class="modal-footer">
+                <button id="btn-cancel" class="btn-secondary">Cancel</button>
+                <button id="btn-save" class="btn-primary">Save</button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal: JSON Viewer -->
+    <div id="modal-kb-overlay" class="modal-overlay hidden">
+        <div class="modal modal-lg">
+            <header class="modal-header">
+                <h3>Knowledge Base (JSON)</h3>
+                <button id="btn-close-kb-modal" class="btn-icon"><span
+                        class="material-symbols-rounded">close</span></button>
+            </header>
+            <div class="modal-body">
+                <pre id="kb-json-content" class="json-viewer"></pre>
+            </div>
+            <footer class="modal-footer">
+                <button id="btn-copy-kb" class="btn-secondary">Copy JSON</button>
+            </footer>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
